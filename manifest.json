@@ -1,0 +1,11 @@
+{
+    "manifest_version": 3,
+    "name": "Gem", 
+    "version": "1.0.1",
+    "description": "A simple gem for your browser.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ]
+}
