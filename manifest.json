@@ -1,11 +1,35 @@
 {
-    "manifest_version": 3,
-    "name": "Gem", 
-    "version": "1.0.1",
-    "description": "A simple gem for your browser.",
-    "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-    ]
+  "manifest_version": 3,
+  "name": "GEM - AI Assistant",
+  "version": "1.0.0",
+  "description": "Discrete AI assistant powered by Gemini API for coding help, summarization, and web analysis",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "scripts/background-minimal.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.js"],
+      "css": ["style/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "view/popup.html",
+    "default_title": "GEM Assistant"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["style/content.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

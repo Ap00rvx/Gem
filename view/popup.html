@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 350px;
+            min-height: 400px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .api-setup {
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+        
+        input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .status.success {
+            color: #4ade80;
+        }
+        
+        .status.error {
+            color: #f87171;
+        }
+        
+        .features {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .feature::before {
+            content: "✦";
+            margin-right: 8px;
+            color: #ffd700;
+        }
+        
+        .shortcut {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 10px;
+            margin-left: auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .feature-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        
+        .feature-icon {
+            font-size: 20px;
+        }
+        
+        .feature-text {
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .shortcuts-info {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+        
+        .shortcuts-info h4 {
+            margin-bottom: 10px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">GEM</div>
+        <div class="subtitle">AI Assistant</div>
+    </div>
+    
+    <div class="content">
+        <div class="api-setup" id="apiSetup">
+            <div class="input-group">
+                <label for="apiKey">Gemini API Key</label>
+                <input type="password" id="apiKey" placeholder="Enter your Gemini API key">
+            </div>
+            <button class="btn" id="saveBtn">Save & Activate</button>
+            <div class="status" id="status"></div>
+        </div>
+        
+        <div class="features" id="features" style="display: none;">
+            <div class="feature-grid">
+                <button class="feature-btn" id="openGemBtn">
+                    <span class="feature-icon">💬</span>
+                    <span class="feature-text">Open GEM Chat</span>
+                </button>
+                <button class="feature-btn" id="summarizeBtn">
+                    <span class="feature-icon">📄</span>
+                    <span class="feature-text">Summarize Page</span>
+                </button>
+                <button class="feature-btn" id="codeAnalyzeBtn">
+                    <span class="feature-icon">💻</span>
+                    <span class="feature-text">Analyze Code</span>
+                </button>
+                <button class="feature-btn" id="helpBtn">
+                    <span class="feature-icon">❓</span>
+                    <span class="feature-text">Show Help</span>
+                </button>
+            </div>
+            
+            <div class="shortcuts-info">
+                <h4>Keyboard Shortcuts:</h4>
+                <div class="feature">
+                    Quick Query
+                    <span class="shortcut">Ctrl+Shift+Q</span>
+                </div>
+                <div class="feature">
+                    Page Summarizer
+                    <span class="shortcut">Ctrl+Shift+S</span>
+                </div>
+                <div class="feature">
+                    LeetCode Helper
+                    <span class="shortcut">Ctrl+Shift+L</span>
+                </div>
+                <div class="feature">
+                    Code Analyzer
+                    <span class="shortcut">Ctrl+Shift+C</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/scripts/popup.js"></script>
+</body>
+</html>
